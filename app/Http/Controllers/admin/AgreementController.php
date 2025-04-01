@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Agreement;
 use Illuminate\Http\Request;
 use App\Models\RentAgreement;
 use Barryvdh\DomPDF\Facade\Pdf;
+
+use function PHPUnit\Framework\returnSelf;
 
 class AgreementController extends Controller
 {
@@ -28,6 +31,27 @@ class AgreementController extends Controller
     }
 
     function saveAgreement(Request $request){
+        
+        $url = url()->previous();
+        
+        $parseUrl = parse_url($url);
+
+        if(isset($parseUrl['query'])){
+            parse_str($parseUrl['query'],$queryParams);
+
+            if(isset($queryParams['form_choice'])){
+                $form_choice = $queryParams['form_choice'];
+            }else{
+                $form_choice = null;
+            }  
+        }else{
+            $form_choice = null;
+        }
+
+        if($form_choice == null){
+            return 'something went wrong';
+        }elseif($form_choice == '1'){
+        
         $request->validate([
             'name' => 'required|String|max:255',
             'flatno' => 'required|max:255',
@@ -36,6 +60,7 @@ class AgreementController extends Controller
             'district' => 'required|String|max:255',
             'state' => 'required|String|max:255',
         ]);
+
 
         $rent = new RentAgreement();
 
@@ -46,12 +71,37 @@ class AgreementController extends Controller
         $rent->district = $request->district;
         $rent->state = $request->state;
 
-        
+
         $rent->save();
+        $this->addInAgreement($rent,1);
 
         $pdf = PDF::loadView('pdf.rentagreement',compact('rent'));
 
         return $pdf->stream('Agreement.pdf');
-        
+    }elseif($form_choice == '2'){
+        return "This is Commercial Agreement";
+    }elseif($form_choice == '3'){
+        return "This is Registry deed";
+    }elseif($form_choice == '4'){
+        return "This is Builders Registry";
+    }elseif($form_choice == '5'){
+        return "This is ATS";
+    }
+    }
+
+    function showAgreementList(){
+        $agreements['data'] = Agreement::all();
+
+        return view('admin.agreementlist')->with($agreements);
+    }
+
+
+    function addInAgreement($data,$type){
+        $agreement = new Agreement();
+        $agreement->type = $type;
+        $agreement->party_name = $data->tenant_name;
+        $agreement-> table_id = $data->id;
+        $agreement->date = date('y-m-d');
+        $agreement->save();
     }
 }
