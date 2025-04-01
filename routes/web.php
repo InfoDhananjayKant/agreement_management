@@ -21,3 +21,4 @@ Route::view('agreementview','admin.agreementview')->name('admin.agreementview');
 Route::get('agreementform',[AgreementController::class,'agreementform'])->name('admin.agreementform');
 
 Route::post('saveagreement',[AgreementController::class,'saveAgreement'])->name('admin.saveagreement');
+Route::get('agreementlist',[AgreementController::class,'showAgreementList'])->name('admin.agreementlist');
