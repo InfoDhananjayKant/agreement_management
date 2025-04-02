@@ -146,7 +146,9 @@ button:hover {
             <h2>List</h2>
             <ul>
                 <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                <li><a href="{{route('admin.user')}}"><i class="fa fa-users"></i> Users</a></li>
+                @if($data->role == '1')
+                    <li><a href="{{route('admin.user')}}"><i class="fa fa-users"></i> Users</a></li>
+                @endif
                 <li class="has-submenu">
                     <a href="#"><i class="fa fa-file-alt"></i> Agreement</a>
                     <ul class="submenu">

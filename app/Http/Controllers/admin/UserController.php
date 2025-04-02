@@ -4,11 +4,10 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Foundation\Configuration\Exceptions;
+
 
 class UserController extends Controller
 {
@@ -22,9 +21,8 @@ class UserController extends Controller
 
         if(Auth::attempt($request->only('email','password'))){
             // dd('Auth Attempt');
-            return redirect()->route('dashboard',)->with(['success'=>'Login  Successfull!',
-            'name'=>$data->name,
-        ]);
+            return view('layout.dashboard', ['data' => $data]);
+
         }
         // dd("Invaild Credential");
         return back()->withErrors(['error' => 'Invaild Credentials']);

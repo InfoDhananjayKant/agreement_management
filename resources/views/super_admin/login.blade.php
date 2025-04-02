@@ -8,6 +8,10 @@
 </head>
 <body>
 
+    @if($errors->has('error'))
+        <p>{{$errors->first('error')}}</p>
+    @endif
+
     <form id="loginForm" method="post" action="{{route('admin.login')}}">
         @csrf
         <h1>Admin Login</h1>
@@ -45,6 +49,3 @@
 </body>
 
 </html>
-
-
-
