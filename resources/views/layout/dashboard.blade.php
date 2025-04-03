@@ -146,7 +146,7 @@ button:hover {
             <h2>List</h2>
             <ul>
                 <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-                @if($data->role == '1')
+                @if(Auth::user()->hasRole('super admin'))
                     <li><a href="{{route('admin.user')}}"><i class="fa fa-users"></i> Users</a></li>
                 @endif
                 <li class="has-submenu">
