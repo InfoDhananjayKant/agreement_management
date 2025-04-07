@@ -7,6 +7,7 @@ use App\Models\Agreement;
 use Illuminate\Http\Request;
 use App\Models\RentAgreement;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Auth;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -70,8 +71,7 @@ class AgreementController extends Controller
         $rent->city = $request->city;
         $rent->district = $request->district;
         $rent->state = $request->state;
-
-
+        
         $rent->save();
         $this->addInAgreement($rent,1);
 
@@ -79,7 +79,7 @@ class AgreementController extends Controller
 
         return $pdf->stream('Agreement.pdf');
     }elseif($form_choice == '2'){
-        return "This is Commercial Agreement";
+        
     }elseif($form_choice == '3'){
         return "This is Registry deed";
     }elseif($form_choice == '4'){
@@ -90,9 +90,16 @@ class AgreementController extends Controller
     }
 
     function showAgreementList(){
-        $agreements['data'] = Agreement::all();
 
-        return view('admin.agreementlist')->with($agreements);
+        if(Auth::user()->hasRole('super admin')){
+            $agreements['data'] = Agreement::all();
+            return view('admin.agreementlist')->with($agreements);
+        }
+        else{
+            $agreements['data'] = Agreement::all()->where('created_by', Auth::user()->id);
+            return view('admin.agreementlist')->with($agreements);
+        }
+
     }
 
 
@@ -102,6 +109,7 @@ class AgreementController extends Controller
         $agreement->party_name = $data->tenant_name;
         $agreement-> table_id = $data->id;
         $agreement->date = date('y-m-d');
+        $agreement->created_by = Auth::user()->id;
         $agreement->save();
     }
 }

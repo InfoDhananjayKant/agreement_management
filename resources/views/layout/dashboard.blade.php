@@ -138,6 +138,45 @@ button:hover {
     }
 }
 
+
+/* this is css for admin.dashboard */
+
+.dashboard-container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.stats-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 200px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.stats-card:hover {
+    transform: scale(1.05);
+}
+
+.stats-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.stats-value {
+    font-size: 22px;
+    font-weight: bold;
+    color: #007bff;
+}
+
+
 </style>
 </head>
 <body>

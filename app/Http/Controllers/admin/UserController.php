@@ -21,7 +21,7 @@ class UserController extends Controller
 
         if(Auth::attempt($request->only('email','password'))){
             // dd('Auth Attempt');
-            return view('layout.dashboard', ['data' => $data]);
+            return view('admin.dashboard', ['data' => $data]);
 
         }
         // dd("Invaild Credential");

@@ -11,7 +11,7 @@ Route::post('/login',[Usercontroller::class,'loginadmin'])->name('admin.login');
 Route::view('/signup','super_admin.signup')->name('admin.signup');
 Route::post('/signup',[Usercontroller::class,'signup'])->name('admin.signup');
 
-Route::view('dashboard','layout.dashboard')->name('dashboard');
+Route::view('dashboard','admin.dashboard')->name('dashboard');
 Route::get('user',[UserController::class,'user'])->name('admin.user');
 
 Route::put('edit/{id}',[UserController::class,'editUser'])->name('admin.user.update');
