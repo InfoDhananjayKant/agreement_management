@@ -195,6 +195,16 @@ button:hover {
                         <li><a href="{{route('admin.agreementlist')}}">Agreement List</a></li>
                     </ul>            
                 </li>
+                <li class="has-submenu">
+                    <a href="#"><i class="fa fa-file-alt"></i> Change Layouts </a>
+                    <ul class="submenu">
+                        <li><a href="">Rent Agreement</a></li>
+                        <li><a href="">Commercial Agreement</a></li>
+                        <li><a href="">Registry Deed</a></li>
+                        <li><a href="">Builders Registry</a></li>
+                        <li><a href="">ATS</a></li>
+                    </ul>            
+                </li>
                 <li><a href="#settings"><i class="fa fa-cog"></i> Settings</a></li>
                 <li><a href="#logout"><i class="fa fa-sign-out-alt"></i> Logout</a></li>
             </ul>

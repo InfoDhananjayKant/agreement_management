@@ -5,8 +5,11 @@
 <?php 
     use App\Models\Agreement;
     use App\Models\User;
-    $agreement = Agreement::all()->where('created_by',$data->id)->count();
+    use Illuminate\Support\Facades\Auth;
+    $id = Auth::user()->id;
+    $agreement = Agreement::all()->where('created_by',$id)->count();
     $userCount = User::all()->where('role','2')->count();
+    $user = User::find($id);
 ?>
 @section("content")
     <div class="dashboard-container">
@@ -15,7 +18,7 @@
             <span class="stats-value">{{$agreement}}</span>
         </div>
 
-        @if($data->role == '1') 
+        @if($user->hasRole('super admin')) 
             <div class="stats-card">
                 <p class="stats-title">No. of Users</p>
                 <span class="stats-value">{{$userCount}}</span>
